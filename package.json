@@ -1,28 +1,51 @@
 {
   "name": "chapter-nodejs",
   "version": "0.1.0",
-  "bin": {
-    "chapter-nodejs": "bin/chapter-nodejs.js"
-  },
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf ./dist && mkdir -p dist/src && cp -r ./src/* ./dist/src && npm run compile && find ./dist/src -name \"*.ts\" -exec rm -rf {} +",
+    "bundle": "npm run clean-build && npm install && npm test && npm run build && npm run install-prod",
+    "clean-build": "rm -rf ./coverage ./dist ./node_modules",
+    "compile": "babel src --extensions \".js,.ts\" --out-dir dist/src --copy-files",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "install-prod": "cp package*json cdk.json ./dist && cd ./dist && npm ci --only=production && cd ..",
+    "lint": "eslint --ext ts src test",
+    "test": "rm -rf ./coverage ./dist && jest --silent=true",
     "watch": "tsc -w",
-    "test": "jest",
     "cdk": "cdk"
   },
   "devDependencies": {
-    "@types/jest": "^28.1.1",
-    "@types/node": "10.17.27",
-    "@types/prettier": "2.6.0",
-    "jest": "^27.5.1",
-    "ts-jest": "^27.1.4",
-    "aws-cdk": "2.28.0",
-    "ts-node": "^10.8.1",
-    "typescript": "~3.9.7"
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.17.10",
+    "@babel/node": "^7.17.10",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-decorators": "^7.17.9",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.5.0",
+    "@types/js-yaml": "^4.0.5",
+    "@types/node": "^17.0.31",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "aws-cdk": "^2.30.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-import-helpers": "^1.2.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^28.0.3",
+    "prettier": "^2.6.2",
+    "ts-jest": "^28.0.1",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.28.0",
-    "constructs": "^10.0.0",
+    "aws-cdk-lib": "^2.30.0",
+    "constructs": "^10.0.130",
     "source-map-support": "^0.5.21"
   }
 }

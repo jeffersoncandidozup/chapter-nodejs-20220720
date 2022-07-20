@@ -1,0 +1,10 @@
+**/*.js
+**/*.json
+**/*.md
+**/*.yaml
+**/*.yml
+jest.config.ts
+cdk.out
+dist
+node_modules
+template
